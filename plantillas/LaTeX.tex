@@ -1,0 +1,182 @@
+%\documentclass[12pt, letterpaper]{book} % Para una tesis book es buuena opción
+%\documentclass[12pt, letterpaper]{report} %Para una tesis report es buena opción
+\documentclass[12pt,a4paper]{article} % Configuración básica: tamaño de fuente y papel
+
+%% =========================
+%% PAQUETES ESENCIALES
+%% =========================
+\usepackage[spanish, es-tabla, es-nodecimaldot]{babel} % Soporte para español 
+\usepackage[utf8]{inputenc}    % Codificación de caracteres UTF-8 (pdflatex)
+\usepackage[T1]{fontenc}       % Mejor renderizado de fuentes
+\usepackage{lmodern}           % Usa la fuente Latin Modern
+\usepackage{microtype}         % Mejoras tipográficas sutiles
+\usepackage{coffeestains}      % Marca de café jaja
+
+%% =========================
+%% MATEMÁTICAS Y FÍSICA
+%% =========================
+\usepackage{amsmath}           % Entornos matemáticos avanzados y símbolos
+\usepackage{amssymb}           % Símbolos matemáticos adicionales
+\usepackage{amsfonts}          % Fuentes matemáticas adicionales (como ℝ, ℤ, etc.)
+\usepackage{mathtools}         % Extensiones y correcciones para amsmath
+\usepackage{physics}           % Notación física (derivadas, vectores, etc.)
+\usepackage{siunitx}           % Formateo correcto de unidades (S.I.)
+\sisetup{per-mode = fraction}  % Configuración de unidades como fracciones
+
+%% ==========================
+%% QUÍMICA
+%% ==========================
+\usepackage[version=4]{mhchem}
+
+%% =========================
+%% GRÁFICOS Y TABLAS
+%% =========================
+\usepackage{graphicx}         % Inclusión de imágenes
+    \graphicspath{{figs/}}    % (buena práctica: carpeta para figuras)
+\usepackage{array}            % Más opciones para tablas y matrices
+\usepackage{booktabs}         % Mejores tablas (formato profesional)
+\usepackage{caption}          % Personalización de leyendas
+\usepackage{subcaption}       % Sub-figuras y sub-tablas
+\usepackage{tabularx}         % tablas con ancho flexible (útil)
+\usepackage{longtable}        % tablas que ocupan varias páginas (si aplica)
+\usepackage{adjustbox}        % Manipulación avanzada de cajas y contenido
+\usepackage{tcolorbox}        % cajas estilizadas (notas, ejemplos, resultados)
+
+\usepackage{tikz}             % dibujo vectorial y diagramas
+%\usetikzlibrary{shapes.geometric, arrows.meta, positioning, babel}
+\usepackage{pgfplots}         % gráficos (espectros, curvas)
+\pgfplotsset{compat=1.18}
+
+%% =========================
+%% REFERENCIAS Y METADATOS
+%% =========================
+\usepackage{hyperref}         % Hipervínculos en el documento
+\hypersetup{colorlinks=true, linkcolor=midnightblue, citecolor=red,
+            pdftitle={Título del artículo}, pdfauthor={Aguilar A.}}
+
+\usepackage{csquotes}         % recomendado con biblatex para citas correctas
+\usepackage[spanish]{cleveref}         % referencias inteligentes (\cref, \Cref)
+
+
+%% =========================
+%% FORMATO Y TIPOGRAFÍA
+%% =========================
+\usepackage{xcolor}
+\usepackage{geometry}         % Márgenes personalizados
+\geometry{
+    margin=2.0cm,   % Configuración de márgenes
+    headheight=15pt, % Aumentamos la altura del encabezado
+    includehead      % Opcional: incluye el encabezado en el cálculo del margen
+         }
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Aguilar A.}
+\fancyhead[R]{\small Título del Artículo}
+\fancyfoot[C]{\thepage}
+
+%% =========================
+%% OTROS PAQUETES ÚTILES
+%% =========================
+\usepackage{float}            % Mejor control de posicionamiento de flotantes
+\usepackage{lipsum}           % Texto de relleno (¡ELIMINAR en documento final!)
+\usepackage{lineno}           % numerar líneas en borradores si lo deseas
+
+%% =========================
+%% PAQUETES ADICIONALES
+%% =========================
+
+%% =========================
+%% Datos del Paper
+%% =========================
+\title{Título del artículo}
+\author{Aguilar A. \quad y \quad Coautor \\
+        \small{Centro de Investigaciones Químicas} \\
+        \small{Universidad Autónoma del Estado de Morelos}}
+\date{\today}
+
+% ----------------------------------------------------------------------------
+\begin{document}
+
+\maketitle
+% Añade una mancha de café en la primera página
+% {opacidad}{escala}{ángulo}{offset-x}{offset-y}
+\coffeestainA{0.8}{0.75}{-45}{5cm}{10.5cm}  
+
+%\tableofcontents
+
+\begin{abstract}
+    \lipsum[1] % Texto de ejemplo. Reemplazar con resumen real
+\end{abstract}
+
+\section{Introducción}
+\lipsum[2] % Texto de ejemplo
+
+\section{Marco Teórico}
+\lipsum[3]
+
+\section{Manejo de unidades}
+Unidades SI: \SI{9.8}{\meter\per\second\squared}
+
+\section{Metodología}
+
+\section{Resultados y Discusión}
+\begin{table}[H] % begin cuando queremos manipular la tabla como [H]
+    \centering
+    \caption{Parámetros del estudio}
+    \begin{tabular}{@{}llr@{}}
+        %{@{}llr@{}} % quitar espacios antes y después del texto
+        \toprule
+        Material & Formula & Densidad (\unit{\gram\per\centi\meter\cubed}) \\
+        \midrule
+        Agua     & Agua      & 1.0 \\
+        Hierro   & \ce{Fe}   & 7.87 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{tabular}{|l|c|r|} % Las barras | crean líneas verticales
+   \hline
+   \textbf{Producto} & \textbf{Cantidad} & \textbf{Precio} \\
+   \hline
+   Manzanas & 10 & 20.50 \\
+   \hline
+   Peras & 5 & 15.00 \\
+   \hline
+\end{tabular}
+
+
+% Bibliografía
+\bibliographystyle{achemso} % estilo de bibliografía (se puede borrar)
+\bibliography{bibliografia}
+
+\end{document}
+
+%% =========================
+%% Información para textos
+%% =========================
+
+%% Graficos
+%    \centering                                                      
+%         \includegraphics[width=0.8\linewidth]{ejemplo.png}
+%    \caption{Ejemplo de figura}
+%
+%% Cuerpo del documento en dos columnas
+%    \begin{multicols}{2}
+%    \end{multicols}
+%
+
+%% Citas - Leer ~/tesis/tutorial/latex/bibliografia/bib_resume/readme.txt
+
+%%  Contenido de bibliografia.bib
+% @article{einstein1905,
+%   author  = {Albert Einstein},
+%   title   = {Zur Elektrodynamik bewegter Körper},
+%   journal = {Annalen der Physik},
+%   volume  = {322},
+%   number  = {10},  <-- No la incluyó Minhhuy en un ejp.
+%   pages   = {891--921},
+%   year    = {1905},
+% }
+
+%% Herramientas

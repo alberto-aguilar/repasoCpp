@@ -1,0 +1,19 @@
+/* 
+ *  jaau 22-08-2025
+ *  Operador de incremento
+ */ 
+#include <iostream>
+
+int main() {
+    // Parte 1 -> Pos-incremento
+    int i{5};
+    int j{i++};
+    std::cout << "i es " << i; // << \n;
+    std::cout << ", j es " << j << "\n";
+
+    // Parte 2 -> Pre-incremento
+    i = 5;
+    j = ++i;
+    std::cout << "i es " << i; // << \n;
+    std::cout << ", j es " << j << "\n";
+}
