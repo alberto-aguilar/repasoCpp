@@ -1,6 +1,6 @@
 /* 
  *  17 / 02 / 2026
- *                 
+ *  actualizado               
  */ 
 
 // Bibliotecas
