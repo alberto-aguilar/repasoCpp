@@ -1,69 +1,143 @@
 /* 
  *  17 / 02 / 2026
- *  actualizado               
+ *  He añadido comentarios    
  */ 
 
 // Bibliotecas
 #include <iostream>
 #include <cmath>
+    // #include <stdexcept>
     // #include <vector>
     // #include <iomanip>
 
 // Constantes
 
 // Funciones
-void inicioCalculadora();
-void seleccionOperacion(int );
-void comprobarError(int );
-void mostrarOperacion();
-void mostrarResultado();
-double suma();
-double resta();
-double multiplicacion();
-double division();
+void inicioCalculadora(bool&, bool&);
+void pedirDatos(double&, double&, char&);
+void resultado(double&, double&, char&);
+void otroCalculo(bool&);
 void cierreCalculadora();
+
 
 // Programa Principal
 int main() 
 {
-    int seleccion;
-    inicioCalculadora();
-    seleccionOperacion(seleccion);
-    comprobarError(seleccion);
+    double num1, num2;
+    char operacion;
+    bool iniciar, opcionValida;
+
+
+    do 
+    {
+         inicioCalculadora(iniciar, opcionValida);
+         pedirDatos(num1, num2, operacion);
+         resultado(num1, num2, operacion);
+         otroCalculo(opcionValida)
+    } while (opcionValida);
+    cierreCalculadora();
 }; // main
 
 
 // Implementación de funciones
-void inicioCalculadora()
+void inicioCalculadora(bool& iniciar, bool& opcionValida)
 {
-    std::cout << "Calculadora de Beto" << std::endl;
-    std::cout << " -------------------------------------------- " << "\n"
-              << " Selecciona qué tipo de cálculo quieres hacer \n"
-              << " 1. Suma \n"
-              << " 2. Resta \n"
-              << " 3. Multiplicación \n"
-              << " 4. División \n"                
-              << " -------------------------------------------- " 
+// 
+    iniciar = true;
+    opcionValida = iniciar;
+    
+    std::cout << "Calculadora de Beto \n"
+              << "Sigue las instrucciones"
               << std::endl;
-};  // inicioCalculadora
-
-
-void seleccionOperacion(int operacion)
-{
-    std::cin >> operacion;
 }
 
-
-void comprobarError(int operacion)
+void pedirDatos(double& num1, double& num2, char& operacion)
 {
-    if (operacion < 1 || operacion > 4 )
+
+    std::cout << "Ingresa el primer número: " << std::endl;
+    std::cin  >> num1;
+
+    std::cout << " -------------------------------------------- " << "\n"
+              << " Selecciona qué tipo de cálculo quieres hacer \n"
+              << " 1. Suma (+) \n"
+              << " 2. Resta (-) \n"
+              << " 3. Multiplicación (*) \n"
+              << " 4. División (/) \n"                
+              << " -------------------------------------------- " 
+              << std::endl;
+
+    std::cin  >> operacion; 
+
+    std::cout << "Ingresa el segundo número";
+    std::cin  >> num2;
+}
+
+void resultado(double& num1, double& num2, char& operacion)
+{
+    bool opcionValida;
+    switch(operacion)
     {
-         std::cout << "opción invalida, por favor vuelve a intentar \n"
-                   << "seleccionando una opción valida de 1 a 4" 
-                   << std::endl;
-         
-         exit(1);
+         std::cout << "El resultado es: " << std::endl;
+         case '+':
+              std::cout << num1 + num2 << std::endl;
+              opcionValida = true;
+              break;
+
+         case '-':
+              std::cout << num1 + num2 << std::endl;
+              opcionValida = true;
+              break;
+    
+         case '*':
+              std::cout << num1 + num2 << std::endl;
+              opcionValida = true;
+              break;
+    
+         case '/':
+              std::cout << num1 + num2 << std::endl;
+              break;
+    
+         default:
+              std::cout << "No seleccionaste una opcion valida."
+                        << "Vuelve a intentar >:(" << std::endl;
     };
+
+};  // resultado()
+
+
+void otroCalculo(bool& opcionValida)
+{
+    bool seguir;
+    char reinicio ;
+
+    std::cout << " ¿Quieres hacer otro cálculo? (s/n)" << std::endl;
+    std::cin  >> reinicio;
+    
+    do
+    {
+         switch(reinicio)
+         {
+              case 's': 
+              case 'S':  
+                   seguir = true;
+                   break;
+
+              case 'n': 
+              case 'N': 
+                   seguir = false;
+                   break;
+
+              default:
+                   std::cout << "Opcion no valida." << std::endl;
+                   opcionValida = false; // Esto hará que el bucle do-while se repita
+                   break;
+         }
+    } while (seguir);
+    
+    if (seguir != opcionValida)
+    {
+         opcionValida = false;    
+    }
 }
 
 
