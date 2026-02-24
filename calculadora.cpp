@@ -47,7 +47,8 @@ void inicioCalculadora(bool& iniciar, bool& opcionValida)
     opcionValida = iniciar;
     
     std::cout << "Calculadora de Beto \n"
-              << "Sigue las instrucciones"
+              << "Por favor sigue las instrucciones \n"
+              << "-----------------------------------------------------"
               << std::endl;
 }
 
@@ -56,44 +57,48 @@ void pedirDatos(double& num1, double& num2, char& operacion)
 
     std::cout << "Ingresa el primer número: " << std::endl;
     std::cin  >> num1;
+    std::cout << std::endl;
 
     std::cout << " -------------------------------------------- " << "\n"
               << " Selecciona qué tipo de cálculo quieres hacer \n"
-              << " 1. Suma (+) \n"
-              << " 2. Resta (-) \n"
-              << " 3. Multiplicación (*) \n"
-              << " 4. División (/) \n"                
+              << " (+) Suma \n"
+              << " (-) Resta \n"
+              << " (*) Multiplicación \n"
+              << " (/) División \n"                
               << " -------------------------------------------- " 
               << std::endl;
 
     std::cin  >> operacion; 
+    std::cout << std::endl;
 
-    std::cout << "Ingresa el segundo número";
+    std::cout << "Ingresa el segundo número" << std::endl;
     std::cin  >> num2;
+    std::cout << std::endl;
+
 }
 
 void resultado(double& num1, double& num2, char& operacion, bool& opcionValida)
 {
+    std::cout << "El resultado es: " << std::endl;
     switch(operacion)
     {
-         std::cout << "El resultado es: " << std::endl;
          case '+':
-              std::cout << num1 + num2 << std::endl;
+              std::cout << num1 + num2 << "\n" << std::endl;
               opcionValida = true;
               break;
 
          case '-':
-              std::cout << num1 + num2 << std::endl;
+              std::cout << num1 - num2 << "\n" << std::endl;
               opcionValida = true;
               break;
     
          case '*':
-              std::cout << num1 + num2 << std::endl;
+              std::cout << num1 * num2 << "\n" << std::endl;
               opcionValida = true;
               break;
     
          case '/':
-              std::cout << num1 + num2 << std::endl;
+              std::cout << num1 / num2 << "\n" << std::endl;
               break;
     
          default:
@@ -106,32 +111,38 @@ void resultado(double& num1, double& num2, char& operacion, bool& opcionValida)
 
 void otroCalculo(bool& opcionValida)
 {
-    bool seguir;
-    char reinicio ;
+    bool seguir, reintentar;
+    char reinicio;
 
     std::cout << " ¿Quieres hacer otro cálculo? (s/n)" << std::endl;
-    std::cin  >> reinicio;
     
     do
     {
+         std::cin  >> reinicio;
          switch(reinicio)
          {
               case 's': 
               case 'S':  
                    seguir = true;
+                   reintentar = false;
                    break;
 
               case 'n': 
               case 'N': 
                    seguir = false;
+                   reintentar = false;
                    break;
 
               default:
-                   std::cout << "Opcion no valida." << std::endl;
-                   opcionValida = false; // Esto hará que el bucle do-while se repita
+                   std::cout << "Opcion no valida, por favor reintenta." 
+                             << std::endl;
+
+                   reintentar = true;
                    break;
          }
-    } while (seguir);
+    } while (reintentar);
+
+    std::cout << std::endl;
     
     if (seguir != opcionValida)
     {
