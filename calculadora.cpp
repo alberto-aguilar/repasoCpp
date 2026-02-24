@@ -1,6 +1,6 @@
 /* 
  *  17 / 02 / 2026
- *  actualizado               
+ *  He añadido comentarios    
  */ 
 
 // Bibliotecas
@@ -15,11 +15,13 @@
 void inicioCalculadora();
 void seleccionOperacion(int );
 void comprobarError(int );
+void mostrarOperacion();
+void mostrarResultado();
+void cierreCalculadora();
 double suma();
 double resta();
 double multiplicacion();
 double division();
-void cierreCalculadora();
 
 // Programa Principal
 int main() 
