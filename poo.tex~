@@ -1,0 +1,425 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{booktabs}
+
+% Configuración para el código C++
+% Configuración de colores para el código
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{
+    language=C++,
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    showspaces=false,
+}
+
+\title{Fundamentos de la Programación Orientada a Objetos (POO)}
+\author{Introducción a C++}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{¿Qué es la POO?}
+
+    La \textbf{Programación Orientada a Objetos} es un paradigma de
+    programación basado en el concepto de ``objetos'', los cuales pueden
+    contener datos (atributos) y código (métodos). A diferencia de la
+    programación procedural, que se centra en la lógica y funciones,
+    la POO se organiza alrededor de los datos y los objetos que los
+    manipulan.
+
+\section{Los 4 Pilares de la POO}
+
+\subsection{Abstracción}
+
+    La abstracción consiste en capturar las características esenciales
+    de un objeto ocultando los detalles de implementación complejos. En
+    C++, se logra principalmente mediante el uso de clases y funciones
+    que definen ``qué'' hace el objeto sin explicar ``cómo''.
+    \\
+    \\
+    Yo lo entiendo como la capacidad de reducir un objeto a palabras, 
+    identificar y escribir de manera ``abstracta'' sus métodos y funciones
+
+    \begin{lstlisting}[caption=Ejemplo de Abstracción]
+class Dispositivo {
+public:
+    virtual void encender() = 0; // Interfaz abstracta
+};
+
+class Radio : public Dispositivo {
+public:
+    void encender() override {
+        // El usuario solo llama a "encender", no sabe como fluye la corriente
+        cout << "Radio encendida" << endl;
+    }
+};
+    \end{lstlisting}
+
+\subsection{Encapsulamiento}
+
+    Es la técnica de empaquetar los datos y los métodos que operan
+    sobre esos datos dentro de una sola unidad o clase. Esto permite
+    restringir el acceso directo a algunos de los componentes del objeto,
+    lo cual es fundamental para la seguridad y la integridad de los datos.
+\\
+
+    En otras palabras, es el ocultamiento de los datos internos
+    (estado) de un objeto para protegerlos de accesos no autorizados
+    o accidentales. Se utilizan modificadores de acceso como
+    \texttt{private} y \texttt{public}.
+
+    \begin{lstlisting}[caption=Ejemplo de Encapsulamiento]
+class CuentaBancaria {
+private:
+    double saldo; // Dato protegido
+
+public:
+    void depositar(double monto) {
+        if (monto > 0) saldo += monto;
+    }
+    double getSaldo() { return saldo; }
+};
+    \end{lstlisting}
+
+    En C++, los modificadores de acceso determinan quién puede leer o
+    modificar los miembros (variables y funciones) de una clase. Esto
+    es la base del \textbf{Encapsulamiento}.
+
+    \subsubsection*{1. Public (Público)}
+
+    Los miembros declarados como \texttt{public} son accesibles desde
+    \textbf{cualquier parte del programa} donde el objeto sea visible.
+
+    \begin{itemize}
+        \item \textbf{¿Cuándo usarlo?} Para métodos que definen el
+        comportamiento (la "interfaz") de la clase, como funciones que
+        permiten configurar valores o realizar acciones.
+    \end{itemize}
+
+    \subsubsection*{2. Private (Privado)}
+
+    Los miembros \texttt{private} solo pueden ser accedidos por
+    \textbf{funciones miembro de la misma clase}. Ni siquiera las clases
+    que heredan de ella pueden acceder directamente a estos datos.
+
+    \begin{itemize}
+        \item \textbf{¿Cuándo usarlo?} Para todos los atributos
+        (variables) que representan el estado interno. Esto evita que
+        el usuario del código "rompa" el objeto accidentalmente.
+    \end{itemize}
+
+    \subsubsection*{Cuadro Comparativo de Visibilidad}
+
+    \begin{center}
+    \begin{tabular}{lccc}
+    \toprule
+    \textbf{Acceso desde...} & \textbf{Public} & \textbf{Protected} & \textbf{Private} \\
+    \midrule
+    La propia clase & Sí & Sí & Sí \\
+    Clase heredada (hija) & Sí & Sí & \textbf{No} \\
+    Fuera de la clase (main) & Sí & \textbf{No} & \textbf{No} \\
+    \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \subsection*{Ejemplo Práctico en C++}
+
+    \begin{lstlisting}
+class Robot {
+private:
+    int bateria; // Nadie fuera de la clase puede cambiar esto directamente
+
+public:
+    string nombre; // Cualquiera puede cambiar el nombre
+
+    // Constructor
+    Robot(string n) : nombre(n), bateria(100) {}
+
+    // Metodo publico para acceder al dato privado de forma segura
+    void usar() {
+        if (bateria > 0) {
+            bateria -= 10;
+            cout << nombre << " esta funcionando..." << endl;
+        }
+    }
+
+    int consultarBateria() { return bateria; }
+};
+
+int main() {
+    Robot miRobot("RX-78");
+
+    miRobot.nombre = "Gundam"; // CORRECTO: Es publico
+    // miRobot.bateria = 0;    // ERROR DE COMPILACION: Es privado
+
+    miRobot.usar(); // CORRECTO: El metodo es publico y el si puede tocar 'bateria'
+    return 0;
+}
+    \end{lstlisting}
+
+
+\subsection{Polimorfismo}
+
+    Se refiere a la propiedad por la que es posible enviar mensajes
+    sintácticamente iguales a objetos de tipos distintos. El objeto que
+    recibe el mensaje decidirá cómo responder según su comportamiento
+    específico.
+
+    Permite que objetos de diferentes clases sean tratados como objetos
+    de una clase base común. La forma más usual en C++ es a través
+    de funciones virtuales, permitiendo que un mismo mensaje ejecute
+    comportamientos distintos.
+
+\begin{lstlisting}[caption=Ejemplo de Polimorfismo]
+void ejecutarSonido(Animal* a) {
+    a->hacerSonido(); // Se ejecutara el sonido segun el tipo real del animal
+}
+
+class Perro : public Animal {
+    void hacerSonido() override { cout << "Guau!" << endl; }
+};
+
+class Gato : public Animal {
+    void hacerSonido() override { cout << "Miau!" << endl; }
+};
+\end{lstlisting}
+
+
+%% Herencia
+\textcolor{red}{\subsection{Herencia}}
+
+    La \textbf{Herencia} permite definir una clase base (padre) que
+    contiene atributos y métodos comunes, para que luego otras clases
+    derivadas (hijas) puedan reutilizar ese código y añadir sus propias
+    especializaciones.
+
+\begin{itemize}
+    \item \textbf{Clase Base:} Define el comportamiento general.
+    \item \textbf{Clase Derivada:} Hereda de la base y puede añadir o modificar (sobrescribir) comportamientos.
+    \item \textbf{Modificador \texttt{protected}:} Es clave en la herencia; permite que las clases hijas accedan a los datos, pero mantiene el bloqueo para el mundo exterior (main).
+\end{itemize}
+
+\begin{lstlisting}[caption=Ejemplo de Sistema de Personajes con Herencia]
+#include <iostream>
+#include <string>
+using namespace std;
+
+// CLASE BASE (PADRE)
+class Entidad {
+protected:
+    string nombre;
+    int nivel;
+    int puntosVida;
+
+public:
+    Entidad(string n, int nv) : nombre(n), nivel(nv), puntosVida(100) {}
+
+    void mostrarInfo() {
+        cout << "Nombre: " << nombre << " | Nivel: " << nivel 
+             << " | HP: " << puntosVida << endl;
+    }
+};
+
+// CLASE DERIVADA (HIJA) - Guerrero
+class Guerrero : public Entidad {
+private:
+    int fuerzaAtaque;
+
+public:
+    // Llamada al constructor de la clase base
+    Guerrero(string n, int nv, int f) : Entidad(n, nv), fuerzaAtaque(f) {}
+
+    void usarEspada() {
+        cout << nombre << " ataca con fuerza de " << fuerzaAtaque << "!" << endl;
+    }
+};
+
+// CLASE DERIVADA (HIJA) - Mago
+class Mago : public Entidad {
+private:
+    int mana;
+
+public:
+    Mago(string n, int nv, int m) : Entidad(n, nv), mana(m) {}
+
+    void lanzarHechizo() {
+        if (mana > 10) {
+            cout << nombre << " lanza una bola de fuego. Mana restante: " << (mana - 10) << endl;
+            mana -= 10;
+        } else {
+            cout << "Mana insuficiente para " << nombre << endl;
+        }
+    }
+};
+
+int main() {
+    Guerrero p1("Aragorn", 10, 50);
+    Mago p2("Gandalf", 20, 100);
+
+    // Ambos pueden usar metodos de la clase Entidad
+    p1.mostrarInfo();
+    p2.mostrarInfo();
+
+    // Cada uno usa sus metodos especificos
+    p1.usarEspada();
+    p2.lanzarHechizo();
+
+    return 0;
+}
+\end{lstlisting}
+
+\section{Resumen de Características}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Concepto} & \textbf{Propósito} \\
+\midrule
+Clase & Molde o plantilla para crear objetos. \\
+Objeto & Instancia específica de una clase. \\
+Atributos & Variables que definen el estado del objeto. \\
+Métodos & Funciones que definen el comportamiento del objeto. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Clases y Constructores en C++}
+
+    \subsection*{¿Qué es una Clase?}
+
+        Una \textbf{clase} es un tipo de dato definido por el usuario. Es
+        el molde o "plano" que describe qué datos tendrá un objeto
+        (atributos) y qué podrá hacer (métodos).
+
+    \subsection*{¿Qué es un Constructor?}
+
+        El \textbf{constructor} es una función especial que se ejecuta
+        automáticamente cuando creas un objeto de esa clase.
+
+        \begin{itemize}
+            \item Tiene el \textbf{mismo nombre} que la clase.
+            \item \textbf{No tiene tipo de retorno} (ni siquiera \texttt{void}).
+            \item Su objetivo principal es inicializar los atributos del objeto.
+        \end{itemize}
+
+    \subsection*{Ejemplo de Código Completo}
+
+        A continuación, definimos una clase sencilla y vemos cómo
+        instanciarla (crear el objeto) en la función \texttt{main}.
+
+\begin{lstlisting}
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Smartphone {
+private:
+    string marca;
+    int almacenamiento;
+
+public:
+    // CONSTRUCTOR PARAMETRIZADO
+    // Se usa para darle valores iniciales al objeto al momento de crearlo
+    Smartphone(string m, int gb) {
+        marca = m;
+        almacenamiento = gb;
+        cout << "Objeto creado: " << marca << " de " << gb << "GB." << endl;
+    }
+
+    // Metodo para mostrar informacion
+    void mostrarEspecificaciones() {
+        cout << "Dispositivo: " << marca << " | Memoria: " << almacenamiento << "GB" << endl;
+    }
+};
+
+// USO EN EL MAIN
+int main() {
+    // 1. Crear el objeto (Instanciacion)
+    // Aqui se llama automaticamente al constructor
+    Smartphone miCelular("Nokia", 128);
+
+    // 2. Usar el objeto
+    // Accedemos a sus metodos publicos usando el operador punto '.'
+    miCelular.mostrarEspecificaciones();
+
+    return 0;
+}
+\end{lstlisting}
+
+
+
+\section{Punteros y Referencias en C++}
+
+Antes de ir al código, definamos los roles de estos operadores:
+
+\begin{itemize}
+    \item \textbf{Puntero (\texttt{*})}: Es una variable que almacena una \textit{dirección de memoria}. Es como tener un papel con la dirección de una casa (puedes cambiar de papel o dejarlo vacío).
+    \item \textbf{Referencia (\texttt{\&})}: Es un \textit{alias} o apodo para una variable existente. Una vez creada, no puede apuntar a otra cosa. Es como si una persona tuviera dos nombres: "Jose" y "Alberto"; ambos se refieren al mismo individuo.
+\end{itemize}
+
+\subsection{Caso Práctico: Matriz de Asientos de Cine}
+
+Imagina una sala de cine de $3 \times 3$. Usaremos una matriz para representar si el asiento está ocupado ($1$) o libre ($0$). Usaremos un \textbf{puntero} para navegar por la matriz y una \textbf{referencia} para modificar un asiento específico de forma eficiente.
+
+\begin{lstlisting}
+#include <iostream>
+using namespace std;
+
+// Funcion que usa una REFERENCIA para marcar un asiento como ocupado
+// Evitamos copiar toda la matriz, pasamos el acceso directo
+void reservarAsiento(int &asiento) {
+    if (asiento == 0) {
+        asiento = 1; // Modificamos el valor original directamente
+        cout << "Reserva exitosa." << endl;
+    } else {
+        cout << "Asiento ya ocupado." << endl;
+    }
+}
+
+int main() {
+    // Matriz 3x3: 0 = libre, 1 = ocupado
+    int cine[3][3] = {
+        {0, 1, 0},
+        {0, 0, 0},
+        {1, 0, 0}
+    };
+
+    // 1. USO DE PUNTEROS
+    // Los punteros son utiles para "apuntar" a elementos de la matriz
+    int* ptrAsiento = &cine[1][1]; // Apuntamos al centro de la sala
+
+    cout << "Valor en el centro (puntero): " << *ptrAsiento << endl;
+    cout << "Direccion de memoria: " << ptrAsiento << endl;
+
+    // 2. USO DE REFERENCIAS
+    // Llamamos a la funcion pasando el elemento directamente. 
+    // C++ lo trata como referencia por la firma de la funcion.
+    cout << "\nIntentando reservar asiento [1][1]..." << endl;
+    reservarAsiento(cine[1][1]); 
+
+    // Verificamos el cambio
+    cout << "Nuevo estado del asiento [1][1]: " << cine[1][1] << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+\end{document}
