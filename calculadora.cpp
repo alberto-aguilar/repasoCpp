@@ -46,9 +46,10 @@ void inicioCalculadora(bool& iniciar, bool& opcionValida)
     iniciar = true;
     opcionValida = iniciar;
     
-    std::cout << "Calculadora de Beto \n"
-              << "Por favor sigue las instrucciones \n"
-              << "-----------------------------------------------------"
+    std::cout << " ---------------------------------------------\n"
+              << "|            Calculadora de Beto             |\n"
+              << "|     Por favor sigue las instrucciones      |\n"
+              << " ---------------------------------------------"
               << std::endl;
 }
 
@@ -59,13 +60,13 @@ void pedirDatos(double& num1, double& num2, char& operacion)
     std::cin  >> num1;
     std::cout << std::endl;
 
-    std::cout << " -------------------------------------------- " << "\n"
+    std::cout << " --------------------------------------------- " << "\n"
               << " Selecciona qué tipo de cálculo quieres hacer \n"
               << " (+) Suma \n"
               << " (-) Resta \n"
               << " (*) Multiplicación \n"
               << " (/) División \n"                
-              << " -------------------------------------------- " 
+              << " --------------------------------------------- " 
               << std::endl;
 
     std::cin  >> operacion; 
@@ -102,8 +103,8 @@ void resultado(double& num1, double& num2, char& operacion, bool& opcionValida)
               break;
     
          default:
-              std::cout << "No seleccionaste una opcion valida."
-                        << "Vuelve a intentar >:(" << std::endl;
+              std::cout << "\n NO SELECCIONASTE UNA OPCIÓN VALIDA. \n "
+                        << "VUELVE A INTENTAR >:( \n" << std::endl;
     };
 
 };  // resultado()
@@ -134,6 +135,7 @@ void otroCalculo(bool& opcionValida)
                    break;
 
               default:
+                   std::cin.clear();   
                    std::cout << "Opcion no valida, por favor reintenta." 
                              << std::endl;
 
@@ -143,7 +145,8 @@ void otroCalculo(bool& opcionValida)
     } while (reintentar);
 
     std::cout << std::endl;
-    
+
+    std::cin.clear();   
     if (seguir != opcionValida)
     {
          opcionValida = false;    
