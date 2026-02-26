@@ -6,6 +6,9 @@
 // Bibliotecas
 #include <iostream>
 #include <cmath>
+
+    // #include "constantesFisicas.h"  // Para usar las ctes físicas usando
+                                       // Fisica::  
     // #include <vector>
     // #include <iomanip>
 
@@ -28,6 +31,24 @@ constexpr double evAnm{1239.84193};  // Para calcular longitudes de onda (lambda
 
 
 // Declaración de Funciones 
+
+
+//  Clase                                                               
+class Racional // El nombre de la clase es un sustantivo                
+{                                                                       
+//  Encapsulación                                                       
+public:                                                                 
+    // Miembro de Datos                                                 
+                                                                        
+    // Miembro de Métodos                                               
+                                                                        
+private:                                                                
+    // Miembro de Datos                                                 
+                                                                        
+    // Miembro de Métodos                                               
+                                                                        
+                                                                        
+};  // Importante terminar con ";"
 
 
 // Programa Principal

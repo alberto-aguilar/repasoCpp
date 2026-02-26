@@ -1,6 +1,16 @@
 /* 
- *  xx / xx / 2026
- *                 
+ *  24 / 02 / 2026
+ *  
+ *  Mascota digital: Programar una mascota que coma, beba, juegue, tenga 
+ *  nombre, duerma, estado físico, etc.
+ *  No debemos dejar que muera la mascota.
+ *
+ *  Lo qué prácticamos es que los valores se salgan de rango (por ejemplo,
+ *  que el hambre sea menor de 0)
+ *
+ *  Pista:
+ *  Atributos: nombre, hambre, energía  <- Los atributos son características
+ *  Métodos: comer, jugar, dormir, estado  <- los métodos son acciones
  */ 
 
 // Biblioteca
@@ -21,16 +31,9 @@
 
 
 //  Clase                                                               
-class Racional // El nombre de la clase es un sustantivo que empieza en Mayúscula
+class Tamagotchi // El nombre de la clase es un sustantivo que empieza en Mayúscula
 {                                                                       
 //  Encapsulación                                                       
-public:                                                                 
-    // Miembro de Datos                                                 
-
-
-    // Miembro de Métodos                                               
-    
-
 private:                                                                
     // Miembro de Datos                                                 
 
@@ -38,6 +41,13 @@ private:
     // Miembro de Métodos                                               
                                                                         
                                                                         
+public:                                                                 
+    // Miembro de Datos                                                 
+    
+
+    // Miembro de Métodos                                               
+    
+
 };  // Importante terminar con ";"
 
 
