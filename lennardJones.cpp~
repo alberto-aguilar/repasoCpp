@@ -1,0 +1,109 @@
+/* 
+ *  02 / 03 / 2026
+ *  
+ *  Implementaré el potencial de Lennard-Jones. 
+ *  El objetivo es calcular la energía de interacción entre dos atómos,
+ *  (cómo el Argón) a una distancia de r.
+ *  El reto es escribir un programa que calcule el potencial V(r) usando
+ *  la formula: 
+ *
+ *       V(r) = 4ϵ [ (σ/r)¹² - (σ/r)⁶ ]
+ *
+ *  Cómo constantes para el argón
+ *  ϵ = 0.997 kJ/mol -> Es la profundidad del pozo
+ *  σ = 3.40 Å -> Diámetro de colisión de la partícula (Argón)
+ */ 
+
+// Biblioteca
+#include <iomanip>
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <fstream>
+
+    // #include "constantesFisicas.h"  // Para usar las ctes físicas usando
+                                       // Fisica::  <- Libreria creada por 
+                                       //              mi y gemini
+                                       // el hf esta en: */tesis/plantillas
+                                       //                */semestre7/cpp/plantillas
+                                       //                */semestre8/cpp/plantillas
+    // #include <iomanip>
+
+
+//  Constantes
+int puntos{30};  // Podemos modificar el número de puntos que queremos
+                 // imprimir en una gráfica
+double extremoIzq{0.0};
+double extremoDer{10.0};
+double incremento{(extremoDer - extremoIzq)/puntos};
+std::vector<double> r(puntos);
+
+// Declaración de Funciones 
+std::vector<double> potencialLJArgon(std::vector<double>& , const double& ); 
+
+
+// Programa Principal
+int main() 
+{
+    // Definimos el nombre de la extensión .dat"
+    std::ofstream archivo("lennardJones.dat");  // Output File Stream 
+                                                // Flujo de datos a archivo
+                                                // de salida. 
+                                                // archivo es el nombre de
+                                                // la variable que contiene
+                                                // la información de como 
+                                                // queremos que se llame 
+                                                // el archivo de salida
+                                                // (output).
+                                                
+    if (archivo.is_open())
+    {
+         // archivo funciona como cout pero en lugar de imprimir en la 
+         // consola, imprime en el archivo con el nombre que asignamos
+         // archivo << "# Distancia(r)          potencial(V)" << std::endl;
+         std::vector<double> energias = potencialLJArgon(r, incremento);
+
+         // Resultados en la tabla 
+         archivo << std::fixed << std::setprecision(4); // Formato para decimales
+         archivo << "r [=] (Angstroms)" << std::setw(25) << "V(r) [=] KJ/mol" << std::endl;
+         archivo << "------------------------------------------" << std::endl;
+         for(size_t i = 0; i < r.size() ; ++i)
+         {
+              archivo << r[i] << std::setw(25) << energias[i] << std::endl;
+         };
+    } 
+}; // main
+
+
+// Implementación de funciones
+std::vector<double> potencialLJArgon(std::vector<double>& rVec, const double& deltaR)
+{
+    double epsilon = 0.997; 
+    double sigma = 3.40; 
+    double razon;
+    double r12;
+    double r6;
+    std::vector<double> V(rVec.size());
+    
+    for(size_t i = 0 ; i < rVec.size() ; ++i)
+    {
+         rVec[i] = (i + 1) * deltaR;
+         razon = sigma/rVec[i];
+         r12 = pow(razon, 12);
+         r6  = pow(razon, 6);
+         
+         V[i] = 4.0 * epsilon * (r12 - r6);
+    };  // for(size_t i = 0 ; i < r.size() ; ++i)
+    return V;
+}; 
+
+void imprimirVector(const std::vector<double>& vec)
+{
+    for(size_t i = 0; i < vec.size(); ++i)
+    {
+         std::cout << vec[i] << std::endl;
+    }
+    
+};
+
+void 
